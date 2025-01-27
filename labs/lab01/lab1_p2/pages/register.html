@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        .success {
+            color: green;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-form">
+        <h2>Register</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error" id="username-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="email-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error" id="password-error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <div class="error" id="confirm-password-error"></div>
+            </div>
+
+            <input type="submit" value="Register">
+            <div class="success" id="form-success"></div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const successMessage = document.getElementById('form-success');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            clearErrors();
+            
+            let isValid = true;
+
+            // Validation logic
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (username.length < 3) {
+                showError('username', 'Username must be at least 3 characters long');
+                isValid = false;
+            }
+
+            if (!email.includes('@')) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            if (password.length < 6) {
+                showError('password', 'Password must be at least 6 characters long');
+                isValid = false;
+            }
+
+            if (password !== confirmPassword) {
+                showError('confirm-password', 'Passwords do not match');
+                isValid = false;
+            }
+
+            if (isValid) {
+                successMessage.textContent = 'Registration successful!';
+            }
+        });
+
+        function showError(inputId, message) {
+            document.getElementById(`${inputId}-error`).textContent = message;
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.error').forEach(error => error.textContent = '');
+            successMessage.textContent = '';
+        }
+    </script>
+
+</body>
+</html>
