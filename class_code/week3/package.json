@@ -1,7 +1,7 @@
 {
-  "name": "lab01",
+  "name": "week3",
   "version": "1.0.0",
-  "main": "lab01-p1.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,10 +12,7 @@
   "description": "",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "lodash": "^4.17.21",
-    "path": "^0.12.7"
-  },
-  "devDependencies": {
+    "express": "^4.21.2",
     "nodemon": "^3.1.9"
   }
 }
