@@ -32,7 +32,6 @@ app.listen(PORT, () => {
   console.log(`http://localhost:${PORT}`);
 });
 
-app.use((req, res) => {
-  res.status(404).send(`No request for ${req.url} exists`);
+app.use("", (req, res) => {
+  res.send(`No request for ${req.url} exists`);
 });
-
