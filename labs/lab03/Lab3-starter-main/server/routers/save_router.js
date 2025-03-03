@@ -1,5 +1,5 @@
 import express from "express";
-import upload from "../middleware/multer.js"
+import upload from "../middleware/multer.js";
 
 const router = express.Router();
 
@@ -17,14 +17,17 @@ router.post("/single", upload.single("file"), (req, res) => {
 });
 
 router.post("/multiple", upload.array("files", 10), (req, res) => {
-  console.log("Uploaded Files:", req.file);
+  console.log("Uploaded Files:", req.files); // <-- Corrected to req.files
 
-  if (!req.file) {
+  if (!req.files || req.files.length === 0) {
     return res.status(400).json({ error: "No files uploaded" });
   }
 
+  const filePaths = req.files.map((file) => `/uploads/${file.filename}`);
+
   res.json({
-    message: "Image uploaded successfully",
+    message: "Images uploaded successfully",
+    filePaths, // Returning an array of uploaded file paths
   });
 });
 
