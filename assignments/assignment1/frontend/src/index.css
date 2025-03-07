@@ -1,0 +1,28 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: white;
+  color: #333;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+
+h5{
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+p {
+  font-size: 16px;
+}
+
+.card {
+  padding: 2em;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 6px black;
+}

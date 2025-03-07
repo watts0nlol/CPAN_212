@@ -1,0 +1,29 @@
+main {
+  padding: 15px;
+}
+
+p {
+  font-size: 16px;
+  color: black;
+}
+
+#links{
+  background-color: darkgray;
+  border-radius: 10px;
+  padding: 10px;
+  padding: 10px;
+  display: flex;
+  border-bottom: 2px solid #ddd;
+}
+
+nav a {
+  color: black !important;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
