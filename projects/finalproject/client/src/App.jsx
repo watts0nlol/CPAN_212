@@ -1,38 +1,27 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "../components/Home";
+import PokemonInfo from "../components/PokemonInfo";
+import Moves from "../components/Moves";
+import Abilities from "../components/Abilities";
+import Login from "../components/Login";
+import Register from "../components/register";
+import "../src/index.css"; // Importing CSS for all pages
 
 function App() {
-  const [pokemon, setPokemon] = useState(null);
-
-  useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/pokemon/pikachu") // Fetch Pikachu data to test if it works
-      .then((response) => response.json())
-      .then((data) => {
-        setPokemon({
-          name: data.name,
-          abilities: data.abilities.map((a) => a.ability.name), // Extract ability names
-        });
-      })
-      .catch((error) => console.error("Error fetching Pokémon:", error));
-  }, []);
-
   return (
-    <div>
-      <h1>Pokémon API Test</h1>
-      {pokemon ? (
-        <div>
-          <h2>Name: {pokemon.name}</h2>
-          <h3>Abilities:</h3>
-          <ul>
-            {pokemon.abilities.map((ability) => (
-              <li key={ability}>{ability}</li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/pokemon" element={<PokemonInfo />} />
+        <Route path="/moves" element={<Moves />} />
+        <Route path="/abilities" element={<Abilities />} />
+        <Route path="/pokemon/:name" element={<PokemonInfo />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
