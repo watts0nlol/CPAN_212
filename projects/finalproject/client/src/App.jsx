@@ -5,7 +5,7 @@ import Moves from "../components/Moves";
 import Abilities from "../components/Abilities";
 import Login from "../components/Login";
 import Register from "../components/register";
-import "../src/index.css"; // Importing CSS for all pages
+import "../src/index.css";
 
 function App() {
   return (

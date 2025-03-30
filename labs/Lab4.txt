@@ -1,0 +1,48 @@
+1.-----
+db["laptops"].find({price: {$eq: 999.99}})
+db["laptops"].find({price: {$ne: 1299.99}})
+db["laptops"].find({price: {$gt: 1500}})
+db["laptops"].find({price: {$lte: 1099.99}})
+
+2.------
+db["laptops"].find({
+    $or: [
+        {price: {$lt: 1000}}, 
+        
+        {stock: {$gt: 10}}
+        
+        ]})
+
+db["laptops"].find({
+    $and: [
+        {price: {$lt: 1000}}, 
+        
+        {stock: {$gt: 10}}
+        
+        ]})
+
+db["laptops"].find({price: {$nor: {$eq: 1099.99}}})
+
+3.----
+
+db["laptops"].find({description: {$exists: true}})
+
+db["laptops"].find({reviews: {$exists: false}})
+
+4.---
+
+db["laptops"].find({genres: "gaming"})
+
+db.laptops.find({
+  genre: { $in: ["Business"] }
+})
+5.--- 
+
+db["laptops"].find({$search: "performance"})
+
+6.---
+
+db["laptops"].updateOne(
+    {model: "MacBook Air"}
+    {$push: {reviews: {user: "John Doe", rating: 4, comments: "It's aight, ive had better at a school cafeteria"}}}
+    )
