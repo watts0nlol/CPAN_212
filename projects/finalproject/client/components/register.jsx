@@ -9,7 +9,7 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8000/register", {
+    const response = await fetch("http://localhost:8001/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -21,26 +21,17 @@ function Register() {
 
   return (
     <div>
-      {/* Navigation Links */}
       <nav>
         <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/pokemon">Pokémon Info</Link>
-          </li>
-          <li>
-            <Link to="/moves">Moves</Link>
-          </li>
-          <li>
-            <Link to="/abilities">Abilities</Link>
-          </li>
-          <li>
-            <Link to="/Login">Login</Link>
-          </li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/pokemon">Pokémon Info</Link></li>
+          <li><Link to="/moves">Moves</Link></li>
+          <li><Link to="/abilities">Abilities</Link></li>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/team-builder">Teambuilder</Link></li>
         </ul>
       </nav>
+
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
         <input

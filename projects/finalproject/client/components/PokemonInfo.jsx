@@ -86,6 +86,9 @@ function PokemonInfo() {
           <li>
             <Link to="/register">Register</Link>
           </li>
+          <li>
+            <Link to="/team-builder">Teambuilder</Link>
+          </li>
         </ul>
       </nav>
       <h1>Pokémon</h1>

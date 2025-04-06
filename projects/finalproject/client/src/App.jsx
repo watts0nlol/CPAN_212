@@ -5,6 +5,7 @@ import Moves from "../components/Moves";
 import Abilities from "../components/Abilities";
 import Login from "../components/Login";
 import Register from "../components/register";
+import TeamBuilder from "../components/TeamBuilder";
 import "../src/index.css";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/pokemon/:name" element={<PokemonInfo />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/team-builder" element={<TeamBuilder />} />
       </Routes>
     </Router>
   );

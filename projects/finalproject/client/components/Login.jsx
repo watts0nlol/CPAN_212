@@ -9,7 +9,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:8000/login", {
+    const response = await fetch("http://localhost:8001/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -21,26 +21,17 @@ function Login() {
 
   return (
     <div>
-      {/* Navigation Links */}
       <nav>
         <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/pokemon">Pokémon Info</Link>
-          </li>
-          <li>
-            <Link to="/moves">Moves</Link>
-          </li>
-          <li>
-            <Link to="/abilities">Abilities</Link>
-          </li>
-          <li>
-            <Link to="/register">Register</Link>
-          </li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/pokemon">Pokémon Info</Link></li>
+          <li><Link to="/moves">Moves</Link></li>
+          <li><Link to="/abilities">Abilities</Link></li>
+          <li><Link to="/register">Register</Link></li>
+          <li><Link to="/team-builder">Teambuilder</Link></li>
         </ul>
       </nav>
+
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <input

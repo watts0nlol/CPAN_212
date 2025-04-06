@@ -20,6 +20,9 @@ function Home() {
           <li>
             <Link to="/register">Register</Link>
           </li>
+          <li>
+            <Link to="/team-builder">Teambuilder</Link>
+          </li>
         </ul>
       </nav>
       <h1>Welcome to the Pokémon App</h1>

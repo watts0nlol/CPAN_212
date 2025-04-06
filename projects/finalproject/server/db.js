@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
-const MONGO_URI = "mongodb://localhost:27017"; // Replace with your actual MongoDB URI
-
+const MONGO_URI = "mongodb://localhost:27017/pokemon_teams"; 
 mongoose
   .connect(MONGO_URI, {
     useNewUrlParser: true,

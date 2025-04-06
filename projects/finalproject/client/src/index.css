@@ -3,11 +3,14 @@ body {
   text-align: left;
   background-color: #f4f4f4;
   padding: 20px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-nav{
+nav {
   text-align: center;
 }
+
 nav ul {
   list-style: none;
   padding: 0;
@@ -55,6 +58,77 @@ button:hover {
 
 img {
   image-rendering: pixelated; /* Keeps pixel art crisp */
-  width: 192px;  /* Default sprite is 96px, so we double it */
-  height: 192px;
+  width: 160px;
+  height: 160px;
+}
+
+/* Team builder current team display */
+.team-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+}
+
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 215px;
+  min-height: 550px; /* Changed from fixed height */
+  background: white;
+  border-radius: 8px;
+  padding: 5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* Saved team Pokémon display */
+.team-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.saved-pokemon {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+  width: 150px;
+  background-color: #f9f9f9;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space: normal;
+  box-sizing: border-box;
+}
+
+.saved-pokemon img {
+  width: 150px;
+  height: 150px;
+}
+
+.saved-pokemon p {
+  font-size: 12px;
+  margin: 4px 0;
+  line-height: 1.2;
+}
+
+/* Optional: Make form inputs smaller on narrow screens */
+@media (max-width: 600px) {
+  input {
+    width: 90%;
+  }
+
+  .pokemon-card {
+    width: 100%;
+  }
+
+  .saved-pokemon {
+    width: 100px;
+  }
 }
