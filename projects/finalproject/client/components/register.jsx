@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "../components/PokemonApp.css";
+
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -22,13 +24,29 @@ function Register() {
   return (
     <div>
       <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/pokemon">Pokémon Info</Link></li>
-          <li><Link to="/moves">Moves</Link></li>
-          <li><Link to="/abilities">Abilities</Link></li>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/team-builder">Teambuilder</Link></li>
+        <ul className="nav-links">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/pokemon">Pokémon Info</Link>
+          </li>
+          <li>
+            <Link to="/moves">Moves</Link>
+          </li>
+          <li>
+            <Link to="/abilities">Abilities</Link>
+          </li>
+          <li>
+            <Link to="/types">Types</Link>
+          </li>
+          <li>
+            <Link to="/team-builder">Teambuilder</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+
         </ul>
       </nav>
 

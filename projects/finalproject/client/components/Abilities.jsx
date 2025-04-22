@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../components/PokemonApp.css";
 
 function formatName(name) {
   return name
@@ -9,11 +10,49 @@ function formatName(name) {
 
 function Abilities() {
   const [abilityName, setAbilityName] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [abilityList, setAbilityList] = useState([]);
+
   const [ability, setAbility] = useState(null);
   const [pokemonList, setPokemonList] = useState([]);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAllAbilities = async () => {
+      try {
+        const response = await fetch(
+          "https://pokeapi.co/api/v2/ability?limit=500"
+        );
+        const data = await response.json();
+        const names = data.results.map((a) => a.name);
+        setAbilityList(names);
+      } catch (err) {
+        console.error("Failed to load abilities", err);
+      }
+    };
+
+    fetchAllAbilities();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    setAbilityName(input);
+    if (input.length === 0) {
+      setSuggestions([]);
+      return;
+    }
+    const filtered = abilityList
+      .filter((name) => name.toLowerCase().includes(input.toLowerCase()))
+      .slice(0, 5);
+    setSuggestions(filtered);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setAbilityName(formatName(suggestion));
+    setSuggestions([]);
+  };
 
   const fetchAbility = async () => {
     if (!abilityName) return;
@@ -31,7 +70,6 @@ function Abilities() {
       const effectEntry = data.effect_entries.find(
         (entry) => entry.language.name === "en"
       );
-
       const flavorTextEntry = data.flavor_text_entries.find(
         (entry) => entry.language.name === "en"
       );
@@ -44,7 +82,6 @@ function Abilities() {
           "No description available.",
       });
 
-      // Fetch valid Pokémon with sprites
       const validPokemon = await filterValidPokemon(data.pokemon);
       setPokemonList(validPokemon);
       setError("");
@@ -56,31 +93,36 @@ function Abilities() {
   };
 
   const filterValidPokemon = async (pokemonArray) => {
-    const validPokemon = [];
+    const pokemonData = await Promise.all(
+      pokemonArray.map(async (entry) => {
+        try {
+          const res = await fetch(entry.pokemon.url);
+          const data = await res.json();
 
-    for (const entry of pokemonArray) {
-      const response = await fetch(entry.pokemon.url);
-      const pokemonData = await response.json();
+          const speciesRes = await fetch(data.species.url);
+          const species = await speciesRes.json();
 
-      // Fetch species data
-      const speciesResponse = await fetch(pokemonData.species.url);
-      const speciesData = await speciesResponse.json();
+          if (data.forms.length === 1 || species.is_battle_only) {
+            return {
+              name: formatName(entry.pokemon.name),
+              sprite: data.sprites.front_default || "",
+            };
+          }
+        } catch (e) {
+          console.error("Failed fetching Pokémon:", entry.pokemon.name, e);
+        }
 
-      if (pokemonData.forms.length === 1 || speciesData.is_battle_only) {
-        validPokemon.push({
-          name: formatName(entry.pokemon.name),
-          sprite: pokemonData.sprites.front_default || "",
-        });
-      }
-    }
+        return null;
+      })
+    );
 
-    return validPokemon;
+    return pokemonData.filter((p) => p !== null);
   };
 
   return (
-    <div>
+    <div className="pokemon-info">
       <nav>
-        <ul>
+        <ul className="nav-links">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -91,26 +133,46 @@ function Abilities() {
             <Link to="/moves">Moves</Link>
           </li>
           <li>
+            <Link to="/types">Types</Link>
+          </li>          
+          <li>
+            <Link to="/team-builder">Teambuilder</Link>
+          </li>
+          <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
             <Link to="/register">Register</Link>
           </li>
-          <li>
-            <Link to="/team-builder">Teambuilder</Link>
-          </li>
+
         </ul>
       </nav>
-      <h1>Ability Search</h1>
-      <input
-        type="text"
-        placeholder="Enter Ability Name"
-        value={abilityName}
-        onChange={(e) => setAbilityName(e.target.value)}
-      />
-      <button onClick={fetchAbility}>Search</button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <h1>Ability Search</h1>
+
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Enter Ability Name"
+          value={abilityName}
+          onChange={handleInputChange}
+          className="search-input"
+        />
+        <button onClick={fetchAbility} className="search-button">
+          Search
+        </button>
+        {suggestions.length > 0 && (
+          <ul className="suggestions-list">
+            {suggestions.map((s, i) => (
+              <li key={i} onClick={() => handleSuggestionClick(s)}>
+                {formatName(s)}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {error && <p className="error-text">{error}</p>}
 
       {ability ? (
         <div>
@@ -120,18 +182,22 @@ function Abilities() {
           {pokemonList.length > 0 && (
             <div>
               <h3>Pokémon with this ability:</h3>
-              <ul>
+              <ul className="pokemon-list">
                 {pokemonList.map((pokemon, index) => (
                   <li
                     key={index}
                     onClick={() =>
                       navigate(`/pokemon/${pokemon.name.toLowerCase()}`)
                     }
-                    style={{ cursor: "pointer" }}
+                    className="clickable-pokemon"
                   >
                     <p>{pokemon.name}</p>
                     {pokemon.sprite && (
-                      <img src={pokemon.sprite} alt={pokemon.name} />
+                      <img
+                        src={pokemon.sprite}
+                        alt={pokemon.name}
+                        className="pokemon-sprite"
+                      />
                     )}
                   </li>
                 ))}

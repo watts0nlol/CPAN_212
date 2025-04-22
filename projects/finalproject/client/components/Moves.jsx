@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../components/PokemonApp.css";
 
 function formatName(name) {
   return name
@@ -9,11 +10,47 @@ function formatName(name) {
 
 function Moves() {
   const [moveName, setMoveName] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [allMoves, setAllMoves] = useState([]);
   const [move, setMove] = useState(null);
   const [pokemonList, setPokemonList] = useState([]);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAllMoves = async () => {
+      try {
+        const response = await fetch(
+          "https://pokeapi.co/api/v2/move?limit=1000"
+        );
+        const data = await response.json();
+        setAllMoves(data.results.map((m) => m.name));
+      } catch (err) {
+        console.error("Failed to fetch moves", err);
+      }
+    };
+    fetchAllMoves();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    setMoveName(input);
+
+    if (input.length === 0) {
+      setSuggestions([]);
+    } else {
+      const filtered = allMoves.filter((name) =>
+        name.toLowerCase().includes(input.toLowerCase())
+      );
+      setSuggestions(filtered.slice(0, 10));
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setMoveName(formatName(suggestion));
+    setSuggestions([]);
+  };
 
   const fetchMove = async () => {
     if (!moveName) return;
@@ -62,33 +99,36 @@ function Moves() {
     }
   };
 
-  // Function to filter valid Pokémon & get sprites
+  // Optimized function: Fetch Pokémon data in parallel using Promise.all
   const filterValidPokemon = async (pokemonArray) => {
-    const validPokemon = [];
+    const fetches = pokemonArray.map(async (pokemon) => {
+      try {
+        const response = await fetch(pokemon.url);
+        const pokemonData = await response.json();
 
-    for (const pokemon of pokemonArray) {
-      const response = await fetch(pokemon.url);
-      const pokemonData = await response.json();
+        const speciesResponse = await fetch(pokemonData.species.url);
+        const speciesData = await speciesResponse.json();
 
-      // Fetch species data
-      const speciesResponse = await fetch(pokemonData.species.url);
-      const speciesData = await speciesResponse.json();
-
-      if (pokemonData.forms.length === 1 || speciesData.is_battle_only) {
-        validPokemon.push({
-          name: formatName(pokemon.name),
-          sprite: pokemonData.sprites.front_default || "",
-        });
+        if (pokemonData.forms.length === 1 || speciesData.is_battle_only) {
+          return {
+            name: formatName(pokemon.name),
+            sprite: pokemonData.sprites.front_default || "",
+          };
+        }
+      } catch (err) {
+        console.error("Error fetching Pokémon:", err);
+        return null;
       }
-    }
+    });
 
-    return validPokemon;
+    const results = await Promise.all(fetches);
+    return results.filter((p) => p); // Remove null entries
   };
 
   return (
-    <div>
+    <div className="pokemon-info">
       <nav>
-        <ul>
+        <ul className="nav-links">
           <li>
             <Link to="/">Home</Link>
           </li>
@@ -99,26 +139,48 @@ function Moves() {
             <Link to="/abilities">Abilities</Link>
           </li>
           <li>
+            <Link to="/types">Types</Link>
+          </li>
+          <li>
+            <Link to="/team-builder">Teambuilder</Link>
+          </li>
+          <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
             <Link to="/register">Register</Link>
           </li>
-          <li>
-            <Link to="/team-builder">Teambuilder</Link>
-          </li>
         </ul>
       </nav>
+
       <h1>Move Search</h1>
-      <input
-        type="text"
-        placeholder="Enter Move Name"
-        value={moveName}
-        onChange={(e) => setMoveName(e.target.value)}
-      />
+
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Enter Move Name"
+          value={moveName}
+          onChange={handleInputChange}
+          className="pokemon-input"
+        />
+        {suggestions.length > 0 && (
+          <ul className="suggestions-list">
+            {suggestions.map((s, idx) => (
+              <li
+                key={idx}
+                className="suggestion-item"
+                onClick={() => handleSuggestionClick(s)}
+              >
+                {formatName(s)}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       <button onClick={fetchMove}>Search</button>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error-message">{error}</p>}
 
       {move ? (
         <div>
@@ -136,10 +198,10 @@ function Moves() {
                 {pokemonList.map((pokemon, index) => (
                   <li
                     key={index}
+                    className="suggestion-item"
                     onClick={() =>
                       navigate(`/pokemon/${pokemon.name.toLowerCase()}`)
                     }
-                    style={{ cursor: "pointer" }}
                   >
                     <p>{pokemon.name}</p>
                     {pokemon.sprite && (

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const teamSchema = new mongoose.Schema(
   {
-    teamname: { type: String, default: "" }, 
+    teamname: { type: String, required: false },
     team: { type: Array, required: true },
   },
   { timestamps: true }

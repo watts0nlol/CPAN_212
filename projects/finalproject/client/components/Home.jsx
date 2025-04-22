@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import "../components/PokemonApp.css";
 
 function Home() {
   return (
-    <div>
+    <div className="pokemon-info">
       <nav>
-        <ul>
+        <ul className="nav-links">
           <li>
             <Link to="/pokemon">Pokémon Info</Link>
           </li>
@@ -15,14 +16,18 @@ function Home() {
             <Link to="/abilities">Abilities</Link>
           </li>
           <li>
+            <Link to="/types">Types</Link>
+          </li>
+          <li>
+            <Link to="/team-builder">Teambuilder</Link>
+          </li>
+          <li>
             <Link to="/login">Login</Link>
           </li>
           <li>
             <Link to="/register">Register</Link>
           </li>
-          <li>
-            <Link to="/team-builder">Teambuilder</Link>
-          </li>
+
         </ul>
       </nav>
       <h1>Welcome to the Pokémon App</h1>

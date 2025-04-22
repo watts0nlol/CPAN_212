@@ -1,0 +1,345 @@
+/* General background and text color */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #4b0082;
+  padding: 10px;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+
+.nav-links a:hover {
+  background-color: #6a0dad;
+  border-radius: 4px;
+}
+
+/* Input container and suggestions */
+.input-container {
+  position: relative;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.pokemon-input {
+  width: 200px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  color: black;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  z-index: 100;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.suggestions-list li,
+.suggestion-item {
+  padding: 8px 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  color: black;
+}
+
+.suggestions-list li:hover,
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Autosuggest box */
+.autosuggest-input {
+  position: relative;
+  display: inline-block;
+}
+
+.suggestion-box {
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.suggestion-box li {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.suggestion-box li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Shared error message */
+.error-message,
+.error-text {
+  color: red;
+  font-weight: bold;
+}
+
+/* Main content styles */
+h1, h2, h3, p {
+  color: black;
+}
+
+/* Pokémon details */
+.pokemon-details-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+}
+
+.stat-row {
+  margin: 5px 0;
+}
+
+.stat-name {
+  display: inline-block;
+  width: 120px;
+}
+
+.stat-bar-background {
+  display: inline-block;
+  width: 255px;
+  background: #eee;
+  height: 12px;
+  position: relative;
+}
+
+.stat-bar-fill {
+  height: 12px;
+  transition: width 0.3s ease;
+}
+
+.stat-value {
+  margin-left: 8px;
+}
+
+.forms-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.form-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.search-input {
+  padding: 8px;
+  margin: 8px;
+  font-size: 1rem;
+}
+
+.search-button {
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.pokemon-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.clickable-pokemon {
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.pokemon-sprite {
+  image-rendering: pixelated;
+}
+
+.search-container {
+  position: relative;
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+/* Selector styles */
+.selector {
+  margin: 10px 0;
+}
+
+.selector select,
+.selector input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+.selector select.dropdown {
+  padding: 6px 10px;
+  margin: 0 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.dual-type-toggle {
+  margin: 0 15px;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  gap: 8px;
+}
+
+/* Relations section */ 
+.relations {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 200px; /* reduced gap from 20px to 5px */
+  margin-top: 20px; /* optionally reduce margin too */
+}
+
+.relations h2 {
+  margin-bottom: 10px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.relations p {
+  margin: 6px 0;
+}
+
+/* Type chart section */
+.type-chart {
+  overflow-x: auto;
+  margin-top: 2rem;
+  padding: 20px;
+  border-top: 2px solid #aaa;
+}
+
+.type-chart table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.type-chart th,
+.type-chart td {
+  padding: 8px 12px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.type-chart th {
+  background-color: #4b0082;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.type-chart td {
+  background-color: #f9f9f9;
+}
+
+.super,
+.type-chart .super {
+  background-color: #a8e6a1;
+  color: white;
+}
+
+.resist,
+.type-chart .resist {
+  background-color: #ffd699;
+  color: white;
+}
+
+.immune,
+.type-chart .immune {
+  background-color: #ff9999;
+  color: white;
+}
+
+/* Type effectiveness blurb */
+.type-chart .blurb {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  font-style: italic;
+  color: #666;
+}
+
+/* Type labels and boxes */
+.type-label {
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.type-box {
+  display: inline-block;
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: white;
+}
+
+.type-box.super {
+  background-color: green;
+}
+
+.type-box.resist {
+  background-color: red;
+}
+
+.type-box.immune {
+  background-color: gray;
+}
+
+.type-box-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  .relations {
+    flex-direction: column;
+  }
+}

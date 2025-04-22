@@ -6,7 +6,11 @@ const router = express.Router();
 // Save a new team to MongoDB
 router.post("/api/save-team", async (req, res) => {
   try {
-    const newTeam = new Team({ team: req.body.team });
+    const newTeam = new Team({
+      teamname: req.body.teamname || "Untitled Team",
+      team: req.body.team,
+    });
+    
     await newTeam.save();
     res.status(201).json({ message: "Team saved successfully!" });
   } catch (error) {
@@ -39,9 +43,13 @@ router.put("/api/update-team/:id", async (req, res) => {
   try {
     const updatedTeam = await Team.findByIdAndUpdate(
       req.params.id,
-      { team: req.body.team },
+      {
+        teamname: req.body.teamname || "Untitled Team",
+        team: req.body.team,
+      },
       { new: true }
     );
+    
     res.json(updatedTeam);
   } catch (error) {
     res.status(500).json({ error: "Failed to update team." });

@@ -6,7 +6,7 @@ import Abilities from "../components/Abilities";
 import Login from "../components/Login";
 import Register from "../components/register";
 import TeamBuilder from "../components/TeamBuilder";
-import "../src/index.css";
+import Types from "../components/Types";
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/team-builder" element={<TeamBuilder />} />
+        <Route path="/types" element={<Types />} />
       </Routes>
     </Router>
   );
